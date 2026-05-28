@@ -7,7 +7,11 @@
     "light": "#F0D090",
     "dark": "#7EC699"
   },
+  "description": "Credentialed human review for AI-assisted work.",
   "favicon": "/favicon.svg",
+  "thumbnails": {
+    "background": "/images/og-background.png"
+  },
   "navigation": {
     "tabs": [
       {
@@ -120,6 +124,15 @@
       "cursor",
       "vscode"
     ]
+  },
+  "metadata": {
+    "timestamp": true
+  },
+  "seo": {
+    "metatags": {
+      "og:site_name": "Experts Know Docs",
+      "twitter:card": "summary_large_image"
+    }
   },
   "footer": {
     "socials": {
