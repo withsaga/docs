@@ -1,33 +1,60 @@
 ---
-title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
+title: "API introduction"
+description: "Use the Experts Know REST API directly"
+icon: "code"
 ---
 
-<Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
-</Note>
+The Experts Know API lets web clients and agents create review requests, quote work, check credits, list capabilities, and track request status.
 
-## Welcome
+## Base URL
 
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
-
-<Card
-  title="Plant Store Endpoints"
-  icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
->
-  View the OpenAPI specification file
-</Card>
-
-## Authentication
-
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
-
-```json
-"security": [
-  {
-    "bearerAuth": []
-  }
-]
+```text
+https://experts-know.vercel.app
 ```
+
+For local development, use:
+
+```text
+http://localhost:3000
+```
+
+## Common headers
+
+```http
+Content-Type: application/json
+X-API-Key: your_api_key
+```
+
+Some dashboard endpoints also accept the requester session cookie created by signup or login.
+
+## Common objects
+
+### Review tier
+
+```ts
+type Tier = "quick_check" | "full_review" | "priority" | "custom";
+```
+
+### Source channel
+
+```ts
+type SourceChannel = "web" | "mcp";
+```
+
+### Demand source
+
+```ts
+type DemandSource = "ai_flagged" | "user_initiated";
+```
+
+## Status codes
+
+| Status | Meaning |
+| --- | --- |
+| `400` | Invalid or missing input |
+| `401` | Authentication required |
+| `402` | Insufficient credits |
+| `403` | Not authorized or policy denied |
+| `404` | Resource not found |
+| `429` | Agent request rate limit exceeded |
+| `500` | Server error |

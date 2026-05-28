@@ -1,11 +1,11 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Mintlify Starter Kit",
+  "name": "Experts Know",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#E5C07B",
+    "light": "#F0D090",
+    "dark": "#7EC699"
   },
   "favicon": "/favicon.svg",
   "navigation": {
@@ -17,36 +17,38 @@
             "group": "Getting started",
             "pages": [
               "index",
-              "quickstart",
-              "development"
+              "quickstart"
             ]
           },
           {
-            "group": "Customization",
+            "group": "Core concepts",
             "pages": [
-              "essentials/settings",
-              "essentials/navigation"
+              "concepts/review-workflow",
+              "concepts/domains-and-tiers",
+              "requesters/credits-and-payments"
             ]
           },
           {
-            "group": "Writing content",
+            "group": "For requesters",
             "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/components",
-              "essentials/reusable-snippets"
+              "requesters/web-dashboard",
+              "requesters/private-documents"
             ]
           },
           {
-            "group": "Agent ready",
+            "group": "For AI agents",
             "pages": [
-              "agent-ready/prompt",
-              "agent-ready/visibility",
-              "agent-ready/contextual",
-              "ai-tools/cursor",
-              "ai-tools/claude-code",
-              "ai-tools/windsurf"
+              "agents/setup",
+              "agents/mcp-tools",
+              "agents/governance",
+              "agents/activity-and-audit"
+            ]
+          },
+          {
+            "group": "For experts and admins",
+            "pages": [
+              "experts/apply",
+              "admins/operations"
             ]
           }
         ]
@@ -55,18 +57,21 @@
         "tab": "API reference",
         "groups": [
           {
-            "group": "API documentation",
+            "group": "API basics",
             "pages": [
-              "api-reference/introduction"
+              "api-reference/introduction",
+              "api-reference/authentication"
             ]
           },
           {
-            "group": "Endpoint examples",
+            "group": "Endpoints",
             "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
+              "api-reference/requests",
+              "api-reference/quotes",
+              "api-reference/credits",
+              "api-reference/pricing-and-capabilities",
+              "api-reference/documents",
+              "api-reference/agent-policy"
             ]
           }
         ]
@@ -75,14 +80,14 @@
     "global": {
       "anchors": [
         {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
+          "anchor": "App",
+          "href": "https://experts-know.vercel.app",
+          "icon": "rectangle-terminal"
         },
         {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
+          "anchor": "GitHub",
+          "href": "https://github.com/withsaga/experts-know",
+          "icon": "github"
         }
       ]
     }
@@ -95,32 +100,30 @@
     "links": [
       {
         "label": "Support",
-        "href": "mailto:hi@mintlify.com"
+        "href": "mailto:mac@commsor.com"
       }
     ],
     "primary": {
       "type": "button",
-      "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
+      "label": "Get API key",
+      "href": "https://experts-know.vercel.app/signup"
     }
   },
   "contextual": {
     "options": [
-     "copy",
-     "view",
-     "chatgpt",
-     "claude",
-     "perplexity",
-     "mcp",
-     "cursor",
-     "vscode"
-   ]
+      "copy",
+      "view",
+      "chatgpt",
+      "claude",
+      "perplexity",
+      "mcp",
+      "cursor",
+      "vscode"
+    ]
   },
   "footer": {
     "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
+      "github": "https://github.com/withsaga"
     }
   }
 }

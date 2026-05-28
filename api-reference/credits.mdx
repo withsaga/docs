@@ -1,0 +1,54 @@
+---
+title: "Credits"
+description: "Check balance, list transactions, and create credit checkout sessions"
+icon: "coins"
+---
+
+## Check balance
+
+```http
+GET /api/credits
+```
+
+Returns the authenticated user's balance and recent transactions.
+
+```json
+{
+  "balance_cents": 25000,
+  "transactions": [
+    {
+      "id": "uuid",
+      "amount_cents": -19900,
+      "type": "debit",
+      "request_id": "uuid",
+      "agent_name": "Claude Code",
+      "workspace_id": "seed-round",
+      "run_id": "run-123",
+      "client_app": "claude-code",
+      "created_at": "2026-05-28T12:00:00.000Z"
+    }
+  ]
+}
+```
+
+## Buy credits
+
+```http
+POST /api/credits
+```
+
+```json
+{
+  "amount_cents": 25000
+}
+```
+
+Allowed values are `5000`, `10000`, `25000`, and `50000`.
+
+Response:
+
+```json
+{
+  "checkout_url": "https://checkout.stripe.com/..."
+}
+```

@@ -1,0 +1,40 @@
+---
+title: "Documents"
+description: "Upload private documents for review requests"
+icon: "file-arrow-up"
+---
+
+## Upload a document
+
+```http
+POST /api/documents
+Content-Type: multipart/form-data
+```
+
+Form field:
+
+| Field | Type | Required |
+| --- | --- | --- |
+| `file` | File | Yes |
+
+Supported files: PDF, TXT, Markdown, DOC, DOCX.
+
+Maximum size: 10 MB.
+
+Response:
+
+```json
+{
+  "document_url": "/api/documents/{user_id}/{uuid}-document.pdf",
+  "file_name": "document.pdf",
+  "size": 12345
+}
+```
+
+Include `document_url` when creating a request:
+
+```json
+{
+  "document_url": "/api/documents/{user_id}/{uuid}-document.pdf"
+}
+```

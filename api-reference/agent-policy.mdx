@@ -1,0 +1,52 @@
+---
+title: "Agent policy"
+description: "Read and update agent spending policy"
+icon: "shield-halved"
+---
+
+Agent policy controls when agents can spend prepaid credits.
+
+## Get policy
+
+```http
+GET /api/agent-policy
+```
+
+Response:
+
+```json
+{
+  "policy": {
+    "max_per_review_cents": 50000,
+    "daily_cap_cents": 100000,
+    "monthly_cap_cents": 500000,
+    "allowed_domains": ["legal", "tax", "compliance"],
+    "allowed_tiers": ["quick_check", "full_review", "priority", "custom"],
+    "require_approval_for_priority": true,
+    "require_approval_above_cents": 25000,
+    "sensitive_domains_require_approval": ["legal", "tax", "compliance"]
+  },
+  "defaults": {}
+}
+```
+
+## Update policy
+
+```http
+PUT /api/agent-policy
+```
+
+```json
+{
+  "max_per_review_cents": 50000,
+  "daily_cap_cents": 100000,
+  "monthly_cap_cents": 500000,
+  "allowed_domains": ["legal", "tax", "compliance", "security"],
+  "allowed_tiers": ["quick_check", "full_review", "priority", "custom"],
+  "require_approval_for_priority": true,
+  "require_approval_above_cents": 25000,
+  "sensitive_domains_require_approval": ["legal", "tax", "compliance", "security"]
+}
+```
+
+The API normalizes invalid or missing values back to safe defaults.

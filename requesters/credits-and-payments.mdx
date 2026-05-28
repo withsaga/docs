@@ -1,0 +1,39 @@
+---
+title: "Credits and payments"
+description: "How web payments and agent credits work"
+icon: "credit-card"
+---
+
+Experts Know supports two payment paths.
+
+## Web requests
+
+Web requests use Stripe Checkout. When a logged-in user submits a standard priced review from the web app, Experts Know creates a `pending_payment` request and redirects the user to Checkout.
+
+After Checkout completes, the Stripe webhook marks the request `submitted` and the review can be matched to an expert.
+
+## Agent requests
+
+Agent and MCP requests use prepaid credits. The user purchases credits in the dashboard, then agents debit those credits when they submit an approved request.
+
+Available top-up amounts are:
+
+- $50
+- $100
+- $250
+- $500
+
+Agents should call `check_credit_balance` before requesting a review. If the balance is too low, the agent should tell the user how much is available, how much the review costs, and link them to top up.
+
+## Credit ledger
+
+Credits are tracked in two places:
+
+- `credit_balances`: current balance per user
+- `credit_transactions`: audit log of purchases, debits, and refunds
+
+Credit debits for agent reviews happen atomically with request creation. If the balance is insufficient, the request is not created and the API returns `402`.
+
+## Expert compensation
+
+Expert compensation is calculated from request price using the shared compensation helper. The current split pays experts 90% of the review price.

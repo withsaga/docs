@@ -1,0 +1,45 @@
+---
+title: "Admin operations"
+description: "Manage experts, applications, pricing, requests, and payouts"
+icon: "gears"
+---
+
+Admins use the admin area to operate the expert-review network.
+
+## Requests
+
+The Requests page shows review requests and lifecycle status. Admins can assign available experts to submitted requests.
+
+Custom requests enter `pending_pricing` until an admin sets or resolves pricing.
+
+## Experts and applications
+
+The Experts page includes:
+
+- Current experts
+- Expert invite flow
+- Available/unavailable status
+- Domain assignments
+- Applications tab with approve/reject workflow
+
+Expert profiles no longer require a per-review rate. Pricing is handled through domain and tier defaults.
+
+## Pricing
+
+The Pricing page manages default review prices by domain and tier.
+
+Current standard tiers are:
+
+- `quick_check`
+- `full_review`
+- `priority`
+
+The `custom` tier is scoped manually.
+
+## Payouts
+
+The Payouts page aggregates pending expert compensation and supports CSV export. Expert compensation currently uses a 90% split of review price.
+
+## Security notes
+
+Admin APIs require an admin key. Requester APIs use either a dashboard session or `X-API-Key`. Expert-facing document access is restricted to the requester or assigned expert.

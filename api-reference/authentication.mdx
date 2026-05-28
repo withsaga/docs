@@ -1,0 +1,48 @@
+---
+title: "Authentication"
+description: "Create accounts and authenticate API calls"
+icon: "key"
+---
+
+## API key authentication
+
+Send the requester API key in the `X-API-Key` header:
+
+```http
+X-API-Key: your_api_key
+```
+
+API keys are used by MCP clients and direct REST integrations.
+
+## Create an account
+
+```http
+POST /api/auth/signup
+```
+
+```json
+{
+  "email": "founder@company.com",
+  "name": "Founder Name"
+}
+```
+
+Successful response:
+
+```json
+{
+  "user_id": "uuid",
+  "email": "founder@company.com",
+  "name": "Founder Name",
+  "api_key": "ek_live_or_test_key",
+  "is_new": true
+}
+```
+
+## Dashboard session
+
+The signup and login flows also set a requester session cookie for dashboard routes. API integrations should rely on `X-API-Key`.
+
+<Warning>
+  Keep API keys private. Agent requests authenticated with an API key can debit credits when policy allows them.
+</Warning>

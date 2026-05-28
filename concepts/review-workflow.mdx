@@ -1,0 +1,58 @@
+---
+title: "Review workflow"
+description: "How expert-review requests move through Experts Know"
+icon: "diagram-project"
+---
+
+Experts Know separates preparation from credentialed judgment. AI or a user prepares the request; a professional reviews the work before the user acts on it.
+
+## Request lifecycle
+
+| Status | Meaning |
+| --- | --- |
+| `pending_pricing` | A custom request needs admin scoping before payment or credit debit. |
+| `pending_payment` | A web request was created and is waiting for Stripe Checkout. |
+| `submitted` | Payment or credits are complete and the request is ready for matching. |
+| `matched` | An expert has been assigned. |
+| `in_review` | The expert is actively reviewing the request. |
+| `completed` | The expert review is complete and available. |
+| `refunded` | The request was refunded. |
+| `cancelled` | The request was cancelled. |
+
+## Web flow
+
+<Steps>
+  <Step title="User submits a review request">
+    The web form sends the request with `source_channel: "web"`.
+  </Step>
+  <Step title="Experts Know creates payment">
+    Standard tier requests create a `pending_payment` request and return a Stripe Checkout URL.
+  </Step>
+  <Step title="Stripe webhook marks it submitted">
+    Once Checkout completes, the request moves to `submitted` and the team is notified.
+  </Step>
+  <Step title="Review is delivered">
+    Completed reviews appear in the dashboard and are emailed to the requester.
+  </Step>
+</Steps>
+
+## Agent flow
+
+<Steps>
+  <Step title="Agent quotes the request">
+    `quote_expert_review` returns price, ETA, missing inputs, required credits, and approval requirements.
+  </Step>
+  <Step title="Agent checks credits">
+    `check_credit_balance` confirms the user has enough prepaid balance.
+  </Step>
+  <Step title="Agent submits after approval">
+    `request_expert_review` evaluates spending policy and atomically debits credits before creating the request.
+  </Step>
+  <Step title="Agent tracks status">
+    `check_expert_review_status` retrieves current status and the completed review.
+  </Step>
+</Steps>
+
+<Warning>
+  Agent requests can be blocked by spending policy, insufficient credits, or the per-user rate limit of 5 review requests per hour.
+</Warning>

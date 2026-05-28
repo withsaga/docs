@@ -1,0 +1,45 @@
+---
+title: "Activity and audit"
+description: "Track quotes, policy checks, credit debits, and request lifecycle events"
+icon: "clipboard-list"
+---
+
+Experts Know records request activity events for visibility into agent and human actions.
+
+## Events
+
+Activity can include:
+
+- `request_created`
+- `request_submitted`
+- `quote_generated`
+- `policy_evaluated`
+- `credits_debited`
+- `expert_matched`
+- `review_started`
+- `review_completed`
+- `request_cancelled`
+- `request_refunded`
+
+## Actors
+
+Events identify the actor type:
+
+- `agent`
+- `user`
+- `admin`
+- `expert`
+- `stripe`
+- `system`
+
+Agent events can also include `agent_name`, `client_app`, `workspace_id`, and `run_id` in metadata or related request fields.
+
+## Where to view activity
+
+Requesters can view activity in the dashboard. Agents can use:
+
+- `list_my_requests` to see request history
+- `check_credit_balance` to see recent credit transactions
+- `check_expert_review_status` to track a specific request
+
+The requester activity API returns the latest activity events for the logged-in dashboard session.

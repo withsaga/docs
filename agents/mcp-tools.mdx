@@ -1,0 +1,112 @@
+---
+title: "MCP tools"
+description: "Tools exposed by the Experts Know MCP server"
+icon: "screwdriver-wrench"
+---
+
+## `list_expert_capabilities`
+
+Discover supported expert domains, required inputs, artifacts, escalation rules, pricing, and SLA expectations.
+
+```json
+{
+  "domain": "legal"
+}
+```
+
+The `domain` field is optional. Omit it to list all capabilities.
+
+## `quote_expert_review`
+
+Quote a credentialed review before committing spend. Always call this before `request_expert_review`.
+
+```json
+{
+  "domain": "legal",
+  "tier": "full_review",
+  "question": "Review this SAFE agreement before investor signature.",
+  "context": "AI-drafted SAFE for a seed round.",
+  "scope": "Valuation cap, MFN clause, securities compliance assumptions",
+  "agent_name": "Claude Code",
+  "workspace_id": "seed-round",
+  "client_app": "claude-code"
+}
+```
+
+Returns price, ETA, required credits, missing inputs, custom-pricing status, and approval requirements.
+
+## `check_credit_balance`
+
+Check prepaid review-credit balance and recent transactions.
+
+```json
+{}
+```
+
+Use this after quoting and before submission.
+
+## `request_expert_review`
+
+Submit an approved expert review and debit credits.
+
+```json
+{
+  "domain": "legal",
+  "tier": "full_review",
+  "question": "Review this SAFE agreement before investor signature.",
+  "context": "AI-drafted SAFE for a seed round.",
+  "scope": "Valuation cap, MFN clause, securities compliance assumptions",
+  "requester_email": "founder@company.com",
+  "demand_source": "ai_flagged",
+  "approval_confirmed": true,
+  "agent_name": "Claude Code",
+  "workspace_id": "seed-round",
+  "run_id": "optional-agent-run-id",
+  "client_app": "claude-code"
+}
+```
+
+Use `approval_confirmed: true` only after the user explicitly approves the quoted scope, price, and any policy-triggering conditions.
+
+## `check_expert_review_status`
+
+Check a submitted review.
+
+```json
+{
+  "request_id": "uuid-from-submission"
+}
+```
+
+Returns current status, ETA, reviewer attribution, and review content once complete.
+
+## `list_pricing`
+
+List configured pricing defaults by domain and tier.
+
+```json
+{
+  "domain": "legal"
+}
+```
+
+Prefer `quote_expert_review` for user-facing commitments because quotes include policy checks and missing inputs.
+
+## `list_my_requests`
+
+List previous requests with status, agent identity, cost, and completed review summaries.
+
+```json
+{}
+```
+
+Use this to avoid duplicate reviews or find a request ID.
+
+## Error handling
+
+| Status | Meaning | Agent behavior |
+| --- | --- | --- |
+| `402` | Insufficient credits | Tell the user balance and required amount, then link to top up. |
+| `403` | Spending policy denied or approval required | Explain the policy reason. Retry only if approval is required and the user explicitly approves. |
+| `429` | Rate limit reached | Wait before retrying. |
+| `400` | Invalid input or missing pricing | Fix inputs or use `custom` when appropriate. |

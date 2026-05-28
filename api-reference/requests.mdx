@@ -1,0 +1,90 @@
+---
+title: "Requests"
+description: "Create, list, and check expert-review requests"
+icon: "inbox"
+---
+
+## Create a request
+
+```http
+POST /api/requests
+```
+
+```json
+{
+  "domain": "legal",
+  "tier": "full_review",
+  "question": "Review this SAFE agreement before investor signature.",
+  "context": "AI-drafted SAFE for a seed round.",
+  "scope": "Valuation cap, MFN clause, securities compliance assumptions",
+  "requester_email": "founder@company.com",
+  "source_channel": "mcp",
+  "demand_source": "ai_flagged",
+  "agent_name": "Claude Code",
+  "workspace_id": "seed-round",
+  "run_id": "optional-agent-run-id",
+  "client_app": "claude-code",
+  "approval_confirmed": true
+}
+```
+
+### Required fields
+
+- `domain`
+- `question`
+- `requester_email`
+- `source_channel`
+
+### Agent response
+
+For `source_channel: "mcp"`, the API evaluates policy, rate limits, and credits before creating a submitted request.
+
+```json
+{
+  "request_id": "uuid",
+  "status": "submitted",
+  "credits_debited": 19900,
+  "message": "Request submitted. A qualified expert will review within 24 hours."
+}
+```
+
+### Web response
+
+For `source_channel: "web"`, standard priced requests return a Stripe Checkout URL.
+
+```json
+{
+  "request_id": "uuid",
+  "status": "pending_payment",
+  "checkout_url": "https://checkout.stripe.com/...",
+  "message": "Complete payment to submit your review request."
+}
+```
+
+Custom requests return:
+
+```json
+{
+  "request_id": "uuid",
+  "status": "pending_pricing",
+  "message": "Request received. Our team will review and provide pricing."
+}
+```
+
+## Check status
+
+```http
+GET /api/requests/{request_id}
+```
+
+Authenticated requesters get details including domain, tier, price, created time, ETA, and completed review summary when available.
+
+Unauthenticated callers receive only minimal status.
+
+## List requester requests
+
+```http
+GET /api/requester/requests
+```
+
+Returns the authenticated requester's review history, including status, source channel, agent identity, price, and review summaries.

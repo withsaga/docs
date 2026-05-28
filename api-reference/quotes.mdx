@@ -1,0 +1,52 @@
+---
+title: "Quotes"
+description: "Quote expert review cost, ETA, missing inputs, and policy requirements"
+icon: "file-invoice-dollar"
+---
+
+Agents should quote before submitting any paid review.
+
+## Create a quote
+
+```http
+POST /api/quote
+```
+
+```json
+{
+  "domain": "legal",
+  "tier": "full_review",
+  "question": "Review this SAFE agreement before investor signature.",
+  "context": "AI-drafted SAFE for a seed round.",
+  "scope": "Valuation cap, MFN clause, securities compliance assumptions",
+  "agent_name": "Claude Code",
+  "workspace_id": "seed-round",
+  "run_id": "optional-agent-run-id",
+  "client_app": "claude-code"
+}
+```
+
+## Response
+
+```json
+{
+  "quote": {
+    "domain": "legal",
+    "capability_name": "legal_review",
+    "tier": "full_review",
+    "price_cents": 19900,
+    "eta_hours": 48,
+    "scope_description": "Expert reviews full context...",
+    "required_credits_cents": 19900,
+    "missing_inputs": [],
+    "explicit_approval_required": true,
+    "approval_required_reasons": ["legal is configured as a sensitive domain"],
+    "can_submit": true,
+    "custom_pricing_required": false
+  }
+}
+```
+
+## Approval handling
+
+If `explicit_approval_required` is true, the agent should show the quote to the user and ask for approval. After approval, submit the request with `approval_confirmed: true`.

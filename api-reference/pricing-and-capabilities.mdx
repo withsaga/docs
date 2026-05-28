@@ -1,0 +1,67 @@
+---
+title: "Pricing and capabilities"
+description: "List active pricing and canonical expert-review capabilities"
+icon: "tags"
+---
+
+## List pricing
+
+```http
+GET /api/pricing
+```
+
+Returns active pricing defaults grouped by domain.
+
+```json
+{
+  "pricing": {
+    "legal": [
+      {
+        "tier": "quick_check",
+        "price_cents": 7900,
+        "scope_description": "Expert reviews a single document or question..."
+      }
+    ]
+  }
+}
+```
+
+## List capabilities
+
+```http
+GET /api/capabilities
+```
+
+Optional query parameter:
+
+```http
+GET /api/capabilities?domain=legal
+```
+
+Returns canonical capabilities with required inputs, supported artifacts, escalation rules, tiers, pricing availability, and SLA expectations.
+
+```json
+{
+  "capabilities": [
+    {
+      "name": "legal_review",
+      "domain": "legal",
+      "label": "Legal Review",
+      "summary": "Credentialed legal review...",
+      "requiredInputs": ["Jurisdiction", "document or question", "business context", "intended action"],
+      "price_model": {
+        "type": "standard_tiers",
+        "custom_available": true,
+        "tiers": [
+          {
+            "tier": "full_review",
+            "price_cents": 19900,
+            "sla_hours": 48,
+            "requires_admin_pricing": false
+          }
+        ]
+      }
+    }
+  ]
+}
+```

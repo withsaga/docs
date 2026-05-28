@@ -1,0 +1,31 @@
+---
+title: "Apply as an expert"
+description: "How credentialed professionals join the review network"
+icon: "user-check"
+---
+
+Experts apply through the public application form at `/apply`.
+
+## Application fields
+
+The application captures:
+
+- Name
+- Email
+- Credentials
+- Years of experience
+- Professional domains
+- Bio
+- LinkedIn or professional profile URL
+
+The API validates input, prevents duplicate pending applications for the same email, stores the application, sends a confirmation email to the applicant, and notifies admins.
+
+## Review process
+
+Admins review applications from Admin -> Experts -> Applications. Pending applications can be approved or rejected.
+
+Approved experts can then be invited into the expert portal, assigned review domains, and matched to requests.
+
+## Expert portal
+
+The expert portal lets experts view assigned requests, open request details, and submit completed reviews. Completed reviews update the requester dashboard and trigger delivery emails.

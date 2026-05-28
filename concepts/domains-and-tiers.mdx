@@ -1,0 +1,40 @@
+---
+title: "Domains and tiers"
+description: "Supported expert domains, review tiers, and escalation guidance"
+icon: "layer-group"
+---
+
+## Review domains
+
+Experts Know currently supports these canonical domains:
+
+| Domain | Typical expert |
+| --- | --- |
+| `legal` | Startup attorney, corporate counsel, contracts attorney |
+| `tax` | CPA, startup tax advisor, international tax specialist |
+| `compliance` | Compliance officer, privacy specialist, regulatory advisor |
+| `immigration` | Immigration attorney, global mobility specialist |
+| `fundraising` | Startup attorney, fundraising advisor, securities specialist |
+| `ip` | IP attorney, patent attorney, open-source licensing specialist |
+| `hiring` | Employment attorney, HR compliance specialist |
+| `security` | Security auditor, incident-response specialist, SOC 2 advisor |
+| `architecture` | Licensed engineer, principal architect, reliability specialist |
+
+Agents can call `list_expert_capabilities` to get required inputs, supported artifacts, escalation rules, tiers, and pricing for each domain.
+
+## Review tiers
+
+| Tier | Use when | SLA |
+| --- | --- | --- |
+| `quick_check` | One focused question or one document section needs expert review. | 24 hours |
+| `full_review` | A full document, decision, or package needs detailed analysis. | 48 hours |
+| `priority` | The same depth as full review, but with an urgent deadline. | 12 hours |
+| `custom` | The request does not fit standard scope or requires admin pricing. | Set after scoping |
+
+## Choosing the right tier
+
+Use `quick_check` for a narrow question. Use `full_review` when the expert needs full context or a full document. Use `priority` for deadlines inside the normal SLA. Use `custom` for unusual jurisdictions, multi-party matters, complex audits, active incidents, litigation-sensitive work, or anything that cannot be priced from the standard catalog.
+
+<Tip>
+  Standard pricing is configured by domain and tier. Agents should use `quote_expert_review` for user-facing commitments because quotes also include ETA, missing inputs, and spending-policy approval requirements.
+</Tip>

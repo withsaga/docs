@@ -1,0 +1,54 @@
+---
+title: "Agent governance"
+description: "Spending policies and approval gates for agent-submitted reviews"
+icon: "shield-check"
+---
+
+Agent requests can spend prepaid credits, so Experts Know evaluates a spending policy before creating the request.
+
+## Default policy
+
+The default policy allows all current review domains and tiers, but requires explicit approval for priority tier, sensitive domains, and requests above the approval threshold.
+
+Default limits:
+
+| Setting | Default |
+| --- | --- |
+| Max per review | $500 |
+| Daily cap | $1,000 |
+| Monthly cap | $5,000 |
+| Approval threshold | $250 |
+| Rate limit | 5 review requests per hour |
+
+Sensitive domains currently include legal, tax, compliance, immigration, fundraising, IP, hiring, and security.
+
+## Policy checks
+
+The policy engine can block requests for:
+
+- Domain not allowed
+- Tier not allowed
+- Per-review maximum exceeded
+- Explicit approval required
+- Daily cap exceeded
+- Monthly cap exceeded
+
+## Approval-required flow
+
+When the API returns `approval_required: true`, the agent should stop and ask the user to approve the quoted review.
+
+After approval, retry `request_expert_review` with:
+
+```json
+{
+  "approval_confirmed": true
+}
+```
+
+<Warning>
+  Do not set `approval_confirmed` automatically. It is meant to represent explicit user approval of the review scope, cost, and risk condition.
+</Warning>
+
+## Managing policy
+
+Users can manage policy from Dashboard -> Settings. The REST API also exposes `GET /api/agent-policy` and `PUT /api/agent-policy`.

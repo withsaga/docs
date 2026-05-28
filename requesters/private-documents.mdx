@@ -1,0 +1,37 @@
+---
+title: "Private documents"
+description: "Upload documents for expert review"
+icon: "file-lock"
+---
+
+Requesters can attach private documents to a review request through the document upload API or the web flow.
+
+## Supported files
+
+Uploads must be between 1 byte and 10 MB.
+
+Supported file types:
+
+- PDF
+- Plain text
+- Markdown
+- Microsoft Word `.doc`
+- Microsoft Word `.docx`
+
+## Document URLs
+
+The upload endpoint returns a private `document_url` such as:
+
+```text
+/api/documents/{user_id}/{uuid}-filename.pdf
+```
+
+Use that URL as `document_url` when creating the review request.
+
+## Access model
+
+Private document access is authenticated. The requester and assigned expert can access documents through Experts Know routes instead of public storage URLs.
+
+<Tip>
+  If an agent is submitting a request, include enough context in the request body for triage even when a document is attached.
+</Tip>

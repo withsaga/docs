@@ -1,0 +1,41 @@
+---
+title: "Requester dashboard"
+description: "Track requests, payments, settings, API keys, and credits"
+icon: "table-columns"
+---
+
+The requester dashboard is the home base for users who submit reviews directly or through agents.
+
+## Dashboard
+
+The main dashboard lists review requests with status, domain, tier, price, source channel, agent identity, and recent activity.
+
+Open a request detail page to see:
+
+- Current lifecycle status
+- Price and tier
+- Agent metadata, if the request came from an MCP client
+- Activity events
+- Completed expert review summary
+
+## Settings
+
+Settings includes:
+
+- Account information
+- API key display and copy controls
+- Credit balance
+- Recent credit transactions
+- Agent spending policy controls
+
+## API key
+
+Use the API key with MCP and REST API requests. Send it as:
+
+```http
+X-API-Key: your_api_key
+```
+
+<Warning>
+  Treat API keys like credentials. An API key can submit agent review requests that debit prepaid credits, subject to the user's spending policy.
+</Warning>

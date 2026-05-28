@@ -1,0 +1,65 @@
+---
+title: "Agent setup"
+description: "Connect Claude Code, Cursor, Windsurf, or another MCP client"
+icon: "robot"
+---
+
+Experts Know exposes an MCP server so AI agents can quote, submit, and track credentialed expert reviews.
+
+## Prerequisites
+
+- An Experts Know account
+- An API key from Dashboard -> Settings
+- Prepaid credits for agent-submitted reviews
+- An MCP-compatible client
+
+## MCP configuration
+
+Add this server to your MCP client config:
+
+```json
+{
+  "mcpServers": {
+    "experts-know": {
+      "command": "npx",
+      "args": ["-y", "experts-know-mcp"],
+      "env": {
+        "API_URL": "https://experts-know.vercel.app",
+        "API_KEY": "your_api_key"
+      }
+    }
+  }
+}
+```
+
+## Recommended agent instruction
+
+Add this to your project instructions so the agent knows when to use Experts Know:
+
+```text
+Use Experts Know when AI-assisted work involves legal, tax, compliance,
+immigration, IP, hiring, security, fundraising, or architecture risk and the
+output will be signed, filed, submitted, implemented, sent externally, or relied
+on for a material decision.
+
+Before submitting a review:
+1. Discover capabilities if the domain or tier is unclear.
+2. Quote the review.
+3. Show the user price, ETA, missing inputs, and approval requirements.
+4. Check credit balance.
+5. Submit only after approval.
+6. Track the request until the review is complete.
+```
+
+## Agent identity fields
+
+Include these fields whenever possible:
+
+| Field | Purpose |
+| --- | --- |
+| `agent_name` | Human-readable agent name, such as `Claude Code` |
+| `workspace_id` | Repository, project, or workspace identifier |
+| `run_id` | Agent session, trace, or task identifier |
+| `client_app` | Client name, such as `claude-code`, `cursor`, or `windsurf` |
+
+These fields appear in request history, credit transactions, and activity logs.
