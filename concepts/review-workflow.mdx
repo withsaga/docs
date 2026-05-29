@@ -43,6 +43,9 @@ Experts Know separates preparation from credentialed judgment. AI or a user prep
 ## Agent flow
 
 <Steps>
+  <Step title="Agent assesses whether review is needed">
+    `assess_expert_review_need` runs the safety router before the user acts on high-stakes output. It returns whether review is recommended and the domain, tier, and scope to quote next.
+  </Step>
   <Step title="Agent quotes the request">
     `quote_expert_review` returns price, ETA, missing inputs, required credits, and approval requirements.
   </Step>

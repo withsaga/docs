@@ -8,6 +8,25 @@ description: "Tools exposed by the Experts Know MCP server"
 icon: "screwdriver-wrench"
 ---
 
+The server exposes eight tools. The typical flow is `assess_expert_review_need` -> `quote_expert_review` -> `check_credit_balance` -> `request_expert_review` -> `check_expert_review_status`, with `list_expert_capabilities` and `list_pricing` for discovery and `list_my_requests` to avoid duplicates.
+
+## `assess_expert_review_need`
+
+Safety router for high-stakes AI-assisted work. The agent should call this **before** the user signs, files, submits, sends to a third party, publishes, or otherwise relies on something the agent helped produce — especially anything legal, tax, compliance, immigration, fundraising, IP, hiring, security, or architecture related.
+
+```json
+{
+  "question": "Should I send this SAFE to the investor to sign?",
+  "context": "AI-drafted SAFE for a $750k seed round on a $10M cap.",
+  "intended_action": "send to investor for signature",
+  "artifact_type": "SAFE",
+  "domain": "legal",
+  "urgency_hours": 48
+}
+```
+
+Every field is optional — pass whatever is known. Returns `should_review`, a `confidence` level, the `recommended_domain`, `recommended_tier`, `review_scope`, `required_inputs`, the matched `triggers`, and a `next_step` of either `continue_without_review` or `quote_expert_review`. When review is recommended, the response hands the agent the exact `domain`, `tier`, and `scope` to pass to `quote_expert_review`.
+
 ## `list_expert_capabilities`
 
 Discover supported expert domains, required inputs, artifacts, escalation rules, pricing, and SLA expectations.

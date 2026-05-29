@@ -54,5 +54,5 @@ Use Experts Know when AI output will affect a material decision or external acti
 </Steps>
 
 <Tip>
-  Agents should always quote first, show the user the price and approval requirements, check credit balance, then submit only after the user approves the review.
+  Agents should call `assess_expert_review_need` before the user acts on high-stakes output, quote the review, show the user the price and approval requirements, check credit balance, then submit only after the user approves.
 </Tip>

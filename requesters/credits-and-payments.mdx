@@ -10,6 +10,10 @@ icon: "credit-card"
 
 Experts Know supports two payment paths.
 
+## Welcome credit
+
+New accounts receive **$20 in free credits** when they verify their email. The grant is idempotent — it happens once per account — and applies to accounts created through the web. It appears in the credit ledger as a **Welcome credit** transaction and is enough to cover a first agent-submitted review without topping up.
+
 ## Web requests
 
 Web requests use Stripe Checkout. When a logged-in user submits a standard priced review from the web app, Experts Know creates a `pending_payment` request and redirects the user to Checkout.
