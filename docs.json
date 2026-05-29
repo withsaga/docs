@@ -70,6 +70,7 @@
           {
             "group": "Endpoints",
             "pages": [
+              "api-reference/safety-assessment",
               "api-reference/requests",
               "api-reference/quotes",
               "api-reference/credits",
@@ -85,7 +86,7 @@
       "anchors": [
         {
           "anchor": "App",
-          "href": "https://experts-know.vercel.app",
+          "href": "https://expertsknow.com",
           "icon": "rectangle-terminal"
         },
         {
@@ -110,7 +111,7 @@
     "primary": {
       "type": "button",
       "label": "Get API key",
-      "href": "https://experts-know.vercel.app/signup"
+      "href": "https://expertsknow.com/signup"
     }
   },
   "contextual": {

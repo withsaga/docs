@@ -10,13 +10,13 @@ icon: "rocket"
 
 ## 1. Create an account
 
-Create an account at [experts-know.vercel.app/signup](https://experts-know.vercel.app/signup). The signup flow returns an API key and creates a dashboard session.
+Create an account at [expertsknow.com/signup](https://expertsknow.com/signup). The signup flow returns an API key and creates a dashboard session. New accounts receive **$20 in free credits** once you verify your email — enough to try an agent-submitted review without topping up.
 
 Keep the API key somewhere safe. You can also view it later from **Dashboard -> Settings**.
 
 ## 2. Add credits
 
-Agent-submitted reviews use prepaid credits. Add balance from **Dashboard -> Settings** or **Dashboard -> Credits**.
+Agent-submitted reviews use prepaid credits. Your $20 welcome credit covers the first review; add more balance from **Dashboard -> Settings** or **Dashboard -> Credits**.
 
 Web-submitted reviews do not require a prepaid balance. They create a Stripe Checkout session for the specific review request.
 
@@ -28,7 +28,7 @@ Standard priced requests move to Stripe Checkout. Custom requests enter `pending
 
 ## 4. Or connect an AI agent
 
-Add the MCP server to Claude Code, Cursor, Windsurf, or another MCP client:
+The fastest way is to copy the **"setup for your agent"** prompt from the [homepage](https://expertsknow.com) or [for-agents page](https://expertsknow.com/for-agents) and paste it to your agent — it asks you for the API key, then writes its own MCP config. To do it manually, add the MCP server to Claude Code, Cursor, Windsurf, or another MCP client:
 
 ```json
 {
@@ -37,7 +37,7 @@ Add the MCP server to Claude Code, Cursor, Windsurf, or another MCP client:
       "command": "npx",
       "args": ["-y", "experts-know-mcp"],
       "env": {
-        "API_URL": "https://experts-know.vercel.app",
+        "API_URL": "https://expertsknow.com",
         "API_KEY": "your_api_key"
       }
     }
@@ -45,13 +45,14 @@ Add the MCP server to Claude Code, Cursor, Windsurf, or another MCP client:
 }
 ```
 
-Then ask your agent to follow this sequence:
+The server's built-in instructions tell the agent to call review proactively. The sequence is:
 
-1. `list_expert_capabilities`
-2. `quote_expert_review`
-3. `check_credit_balance`
-4. `request_expert_review`
-5. `check_expert_review_status`
+1. `assess_expert_review_need` — before you act on high-stakes AI output
+2. `list_expert_capabilities` — if the domain or tier is unclear
+3. `quote_expert_review`
+4. `check_credit_balance`
+5. `request_expert_review` — only after you approve the quoted scope and cost
+6. `check_expert_review_status`
 
 ## 5. Track the result
 

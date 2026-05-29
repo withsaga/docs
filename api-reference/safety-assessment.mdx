@@ -1,0 +1,73 @@
+---
+title: "Safety assessment"
+description: "Assess whether high-stakes AI work needs credentialed review"
+"og:title": "Safety assessment | Experts Know Docs"
+"og:description": "Assess whether high-stakes AI work needs credentialed review"
+"twitter:title": "Safety assessment | Experts Know Docs"
+"twitter:description": "Assess whether high-stakes AI work needs credentialed review"
+icon: "shield-exclamation"
+---
+
+The safety router decides whether AI-assisted work should be routed to a credentialed expert before the user acts on it. It is the endpoint behind the `assess_expert_review_need` MCP tool, and it returns the `domain`, `tier`, and `scope` to use when quoting.
+
+## Assess review need
+
+```http
+POST /api/safety/assess
+```
+
+All fields are optional — send whatever is known about the work being assessed.
+
+```json
+{
+  "domain": "legal",
+  "question": "Should I send this SAFE to the investor to sign?",
+  "context": "AI-drafted SAFE for a $750k seed round on a $10M cap.",
+  "intended_action": "send to investor for signature",
+  "artifact_type": "SAFE",
+  "urgency_hours": 48
+}
+```
+
+| Field | Type | Purpose |
+| --- | --- | --- |
+| `domain` | string | Known domain, if already clear (`legal`, `tax`, `compliance`, `immigration`, `fundraising`, `ip`, `hiring`, `security`, `architecture`). |
+| `question` | string | The user's request or the AI output being assessed. |
+| `context` | string | Background, draft summary, risk notes, or business context. |
+| `intended_action` | string | What the user plans to do, e.g. sign, file, submit, send to investors, launch. |
+| `artifact_type` | string | Type of artifact, e.g. SAFE, offer letter, tax election, SOC 2 plan, privacy policy. |
+| `urgency_hours` | number | Hours until the user needs to act, if known. |
+
+Response:
+
+```json
+{
+  "assessment": {
+    "should_review": true,
+    "confidence": "high",
+    "recommended_domain": "legal",
+    "recommended_capability": "fundraising_documents",
+    "recommended_tier": "full_review",
+    "triggers": ["signature", "fundraising"],
+    "reasons": ["Output will be signed by a third party", "Fundraising documents carry securities exposure"],
+    "review_scope": "Valuation cap, MFN clause, and securities compliance assumptions",
+    "required_inputs": ["the draft SAFE", "the cap table"],
+    "next_step": "quote_expert_review"
+  }
+}
+```
+
+| Field | Meaning |
+| --- | --- |
+| `should_review` | Whether credentialed review is recommended. |
+| `confidence` | `low`, `medium`, or `high`. |
+| `recommended_domain` | Inferred expert domain, or `null`. |
+| `recommended_capability` | Matched capability key, or `null`. |
+| `recommended_tier` | Suggested tier to quote. |
+| `triggers` | Action and domain signals that fired. |
+| `reasons` | Human-readable justification. |
+| `review_scope` | Scope string to pass to `quote_expert_review`. |
+| `required_inputs` | Inputs the expert will need. |
+| `next_step` | `quote_expert_review` or `continue_without_review`. |
+
+This endpoint requires authentication but does not spend credits. When `next_step` is `quote_expert_review`, call [`POST /api/quote`](/api-reference/quotes) with the recommended `domain`, `tier`, and `scope`.

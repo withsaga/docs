@@ -8,13 +8,23 @@ description: "Connect Claude Code, Cursor, Windsurf, or another MCP client"
 icon: "robot"
 ---
 
-Experts Know exposes an MCP server so AI agents can quote, submit, and track credentialed expert reviews.
+Experts Know exposes an MCP server so AI agents can assess, quote, submit, and track credentialed expert reviews.
+
+## Fastest path: let your agent set itself up
+
+The quickest way to connect is to paste a setup prompt to your agent and let it configure itself. Copy the **"setup for your agent"** prompt from [the homepage](https://expertsknow.com) or the [for-agents page](https://expertsknow.com/for-agents) and paste it into your agent. The prompt tells the agent to:
+
+1. Ask you to sign up at [expertsknow.com/signup](https://expertsknow.com/signup) (new accounts get **$20 in free credits**) and paste it the API key from Settings — the one step the agent can't do alone.
+2. Write the MCP config into your client and prompt you to restart.
+3. Adopt the proactive trigger rule and tool flow described below.
+
+The rest of this page is the manual equivalent.
 
 ## Prerequisites
 
 - An Experts Know account
 - An API key from Dashboard -> Settings
-- Prepaid credits for agent-submitted reviews
+- Prepaid credits for agent-submitted reviews (new accounts start with $20)
 - An MCP-compatible client
 
 ## MCP configuration
@@ -28,7 +38,7 @@ Add this server to your MCP client config:
       "command": "npx",
       "args": ["-y", "experts-know-mcp"],
       "env": {
-        "API_URL": "https://experts-know.vercel.app",
+        "API_URL": "https://expertsknow.com",
         "API_KEY": "your_api_key"
       }
     }
@@ -36,23 +46,24 @@ Add this server to your MCP client config:
 }
 ```
 
-## Recommended agent instruction
+## Proactive triggering
 
-Add this to your project instructions so the agent knows when to use Experts Know:
+The MCP server ships with built-in instructions telling the agent to request expert review proactively, before high-stakes AI output is acted on — so in many clients no extra configuration is needed. To reinforce it, add this to your project instructions:
 
 ```text
-Use Experts Know when AI-assisted work involves legal, tax, compliance,
-immigration, IP, hiring, security, fundraising, or architecture risk and the
-output will be signed, filed, submitted, implemented, sent externally, or relied
-on for a material decision.
+Before I sign, file, submit, send to a third party, publish, or otherwise rely
+on something you helped produce — especially anything legal, tax, compliance,
+immigration, fundraising, IP, hiring, security, or architecture related — call
+assess_expert_review_need first. Don't wait for me to ask.
 
-Before submitting a review:
-1. Discover capabilities if the domain or tier is unclear.
-2. Quote the review.
-3. Show the user price, ETA, missing inputs, and approval requirements.
-4. Check credit balance.
-5. Submit only after approval.
-6. Track the request until the review is complete.
+Tool flow:
+1. assess_expert_review_need to check whether human review is warranted.
+2. list_expert_capabilities if the domain or tier is unclear.
+3. quote_expert_review for price, ETA, missing inputs, and approval requirements.
+4. Show me the price and ETA before spending any credits.
+5. check_credit_balance.
+6. request_expert_review only after I approve the quoted scope and cost.
+7. check_expert_review_status to fetch the result.
 ```
 
 ## Agent identity fields
